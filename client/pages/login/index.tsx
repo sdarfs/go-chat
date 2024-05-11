@@ -47,7 +47,7 @@ const index = () => {
   return (
     <div className='flex items-center justify-center min-w-full min-h-screen'>
       <form className='flex flex-col md:w-1/5'>
-        <div className='text-3xl font-bold text-center'>
+        <div className='text-5xl font-bold text-center'>
           <span className='text-green'>Welcome!</span>
         </div>
         <input
