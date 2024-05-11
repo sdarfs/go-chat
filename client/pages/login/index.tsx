@@ -2,6 +2,8 @@ import { useState, useContext, useEffect } from 'react'
 import { API_URL } from '../../constants'
 import { useRouter } from 'next/router'
 import { AuthContext, UserInfo } from '../../modules/auth_provider'
+import Link from 'next/link'
+
 
 const index = () => {
   const [email, setEmail] = useState('')
@@ -46,7 +48,7 @@ const index = () => {
     <div className='flex items-center justify-center min-w-full min-h-screen'>
       <form className='flex flex-col md:w-1/5'>
         <div className='text-3xl font-bold text-center'>
-          <span className='text-blue'>welcome!</span>
+          <span className='text-green'>Welcome!</span>
         </div>
         <input
           placeholder='email'
@@ -62,12 +64,15 @@ const index = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button
-          className='p-3 mt-6 rounded-md bg-blue font-bold text-white'
+          className='p-3 mt-6 rounded-md bg-light_green font-bold text-white'
           type='submit'
           onClick={submitHandler}
         >
           login
         </button>
+            <div className="mt-4 text-black">
+              <Link href="/signup">register</Link>
+            </div>
       </form>
     </div>
   )

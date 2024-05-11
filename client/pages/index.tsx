@@ -69,8 +69,8 @@ const index = () => {
 
   return (
     <>
-      <div className='my-8 px-4 md:mx-32 w-full h-full'>
-        <div className='flex justify-center mt-3 p-5'>
+      <div className='my-22 px-14 md:mx-24 w-full h-full'>
+        <div className='flex justify-center mt-3 p-8'>
           <input
             type='text'
             className='border border-grey p-2 rounded-md focus:outline-none focus:border-blue'
@@ -85,16 +85,16 @@ const index = () => {
             create room
           </button>
         </div>
-        <div className='mt-6'>
+        <div className='mt-18'>
           <div className='font-bold'>Available Rooms</div>
-          <div className='grid grid-cols-1 md:grid-cols-5 gap-4 mt-6'>
+          <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mt-18'>
             {rooms.map((room, index) => (
               <div
                 key={index}
                 className='border border-blue p-4 flex items-center rounded-md w-full'
               >
                 <div className='w-full'>
-                  <div className='text-sm'>room</div>
+                  <div className='text-xl'>room</div>
                   <div className='text-blue font-bold text-lg'>{room.name}</div>
                 </div>
                 <div className=''>
