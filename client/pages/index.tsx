@@ -7,141 +7,145 @@ import { WebsocketContext } from '../modules/websocket_provider'
 import { useRouter } from 'next/router'
 
 const index = () => {
-  const [rooms, setRooms] = useState<{ id: string; name: string }[]>([])
-  const [roomName, setRoomName] = useState('')
-  const { user } = useContext(AuthContext)
-  const { setConn } = useContext(WebsocketContext)
+    const [rooms, setRooms] = useState<{ id: string; name: string }[]>([])
+    const [roomName, setRoomName] = useState('')
+    const { user } = useContext(AuthContext)
+    const { setConn } = useContext(WebsocketContext)
+    const { authenticated } = useContext(AuthContext)
 
-  const router = useRouter()
+    const router = useRouter()
+
 //получение комнат
-  const getRooms = async () => {
-    try {
-      const res = await fetch(`${API_URL}/ws/getRooms`, {
-        method: 'GET',
-      })
+    const getRooms = async () => {
+        try {
+            const res = await fetch(`${API_URL}/ws/getRooms`, {
+                method: 'GET',
+            })
 
-      const data = await res.json()
-      if (res.ok) {
-        setRooms(data)
-      }
-    } catch (err) {
-      console.log(err)
+            const data = await res.json()
+            if (res.ok) {
+                setRooms(data)
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
-  }
 
-  useEffect(() => {
-    getRooms()
-  }, [])
-
-  //создание комнат
-  const submitHandler = async (e: React.SyntheticEvent) => {
-    e.preventDefault()
-
-    try {
-      setRoomName('')
-      const res = await fetch(`${API_URL}/ws/createRoom`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          id: uuidv4(),
-          name: roomName,
-        }),
-      })
-
-      if (res.ok) {
+    useEffect(() => {
         getRooms()
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
+    }, [])
 
-  const joinRoom = (roomId: string) => {
-    const ws = new WebSocket(
-      `${WEBSOCKET_URL}/ws/joinRoom/${roomId}?userId=${user.id}&username=${user.username}`
-    )
-    if (ws.OPEN) {
-      setConn(ws)
-      router.push('/app')
-      return
+    //создание комнат
+    const submitHandler = async (e: React.SyntheticEvent) => {
+        e.preventDefault()
+
+        try {
+            setRoomName('')
+            const res = await fetch(`${API_URL}/ws/createRoom`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    id: uuidv4(),
+                    name: roomName,
+                }),
+            })
+
+            if (res.ok) {
+                getRooms()
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
-  }
+
+    const joinRoom = (roomId: string) => {
+        const ws = new WebSocket(
+            `${WEBSOCKET_URL}/ws/joinRoom/${roomId}?userId=${user.id}&username=${user.username}`
+        )
+        if (ws.OPEN) {
+            setConn(ws)
+            router.push('/app')
+            return
+        }
+    }
 
 //выход из системы
-  const LogOutHandler = async (e: React.SyntheticEvent) => {
-      e.preventDefault()
+    const LogOutHandler = async (e: React.SyntheticEvent) => {
+        e.preventDefault()
 
-      try {
-        const res = await fetch(`${API_URL}/logout`, {method: 'GET'})
+        try {
+            const res = await fetch(`${API_URL}/logout`, {method: 'GET'})
 
-        const data = await res.json()
-        if (res.ok) {
-          localStorage.removeItem('user_info')
-          return router.push('/login')
+            const data = await res.json()
+            if (res.ok) {
+
+                authenticated:false
+                localStorage.removeItem('user_info')
+                return router.push('/login')
+            }
+        }catch (err) {
+            console.log(err)
         }
-      }catch (err) {
-        console.log(err)
-      }
     }
 
 
-  return (
-    <>
-      <div className='my-22 px-14 md:mx-24 w-full h-full'>
-        <div className='flex justify-center mt-3 p-8'>
-          <input
-            type='text'
-            className='border border-grey p-2 rounded-md focus:outline-none focus:border-blue'
-            placeholder='room name'
-            value={roomName}
-            onChange={(e) => setRoomName(e.target.value)}
-          />
-          <button
-            className='bg-green border text-white rounded-md p-2 md:ml-4'
-            onClick={submitHandler}
-          >
-            create room
-          </button>
-          <button
-              className='bg-green border text-white rounded-md p-1 md:ml-2'
-              onClick={LogOutHandler}
-          >
-            Logout
-          </button>
-        </div>
-        <div className='mt-18'>
-          <div className='font-bold'>Available Rooms</div>
-          <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mt-18'>
-            {rooms.map((room, index) => (
-              <div
-                key={index}
-                className='border border-light_green p-4 flex items-center rounded-md w-full'
-              >
-                <div className='w-full'>
-                  <div className='text-xl'>room</div>
-                  <div className='text-black font-bold text-lg'>{room.name}</div>
+    return (
+        <>
+            <div className='my-22 px-14 md:mx-24 w-full h-full'>
+                <div className='flex justify-center mt-3 p-8'>
+                    <input
+                        type='text'
+                        className='border border-grey p-2 rounded-md focus:outline-none focus:border-blue'
+                        placeholder='room name'
+                        value={roomName}
+                        onChange={(e) => setRoomName(e.target.value)}
+                    />
+                    <button
+                        className='bg-green border text-white rounded-md p-2 md:ml-4'
+                        onClick={submitHandler}
+                    >
+                        create room
+                    </button>
+                    <button
+                        className='bg-green border text-white rounded-md p-1 md:ml-2'
+                        onClick={LogOutHandler}
+                    >
+                        Logout
+                    </button>
                 </div>
-                <div className=''>
-                  <button
-                    className='px-4 text-white bg-light_green rounded-md'
-                    onClick={() => joinRoom(room.id)}
-                  >
-                    join
-                  </button>
+                <div className='mt-18'>
+                    <div className='font-bold'>Available Rooms</div>
+                    <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mt-18'>
+                        {rooms.map((room, index) => (
+                            <div
+                                key={index}
+                                className='border border-light_green p-4 flex items-center rounded-md w-full'
+                            >
+                                <div className='w-full'>
+                                    <div className='text-xl'>room</div>
+                                    <div className='text-black font-bold text-lg'>{room.name}</div>
+                                </div>
+                                <div className=''>
+                                    <button
+                                        className='px-4 text-white bg-light_green rounded-md'
+                                        onClick={() => joinRoom(room.id)}
+                                    >
+                                        join
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        ))}
+                    </div>
 
                 </div>
 
-              </div>
-            ))}
-          </div>
+            </div>
 
-        </div>
-
-      </div>
-
-    </>
-  )
+        </>
+    )
 }
 
 export default index
