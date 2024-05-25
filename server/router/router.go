@@ -15,7 +15,7 @@ func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	r = gin.Default()
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{""},
+		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "POST"},
 		AllowHeaders:     []string{"Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
