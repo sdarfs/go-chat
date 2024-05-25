@@ -97,7 +97,7 @@ const index = () => {
         </div>
         <div className='fixed bottom-0 mt-4 w-full'>
           <div className='flex md:flex-row px-4 py-2 bg-grey md:mx-4 rounded-md'>
-            <div className='flex w-full mr-4 rounded-md border border-blue'>
+            <div className='flex w-full mr-4 rounded-md border border-light_green'>
               <textarea
                 ref={textarea}
                 placeholder='type your message here'
@@ -107,7 +107,7 @@ const index = () => {
             </div>
             <div className='flex items-center'>
               <button
-                className='p-2 rounded-md bg-blue text-white'
+                className='p-2 rounded-md bg-light_green text-white'
                 onClick={sendMessage}
               >
                 Send

@@ -45,36 +45,36 @@ const index = () => {
   }
 
   return (
-    <div className='flex items-center justify-center min-w-full min-h-screen'>
-      <form className='flex flex-col md:w-1/5'>
-        <div className='text-5xl font-bold text-center'>
-          <span className='text-green'>Welcome!</span>
-        </div>
-        <input
-          placeholder='email'
-          className='p-3 mt-8 rounded-md border-2 border-grey focus:outline-none focus:border-blue'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type='password'
-          placeholder='password'
-          className='p-3 mt-4 rounded-md border-2 border-grey focus:outline-none focus:border-blue'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button
-          className='p-3 mt-6 rounded-md bg-light_green font-bold text-white'
-          type='submit'
-          onClick={submitHandler}
-        >
-          login
-        </button>
-            <div className="mt-4 text-black">
-              <Link href="/signup">register</Link>
-            </div>
-      </form>
-    </div>
+      <div className='flex items-center justify-center min-w-full min-h-screen'>
+        <form className='flex flex-col md:w-1/5'>
+          <div className='text-5xl font-bold text-center'>
+            <span className='text-green'>Welcome!</span>
+          </div>
+          <input
+              placeholder='email'
+              className='p-3 mt-8 rounded-md border-2 border-grey focus:outline-none focus:border-green'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+              type='password'
+              placeholder='password'
+              className='p-3 mt-4 rounded-md border-2 border-grey focus:outline-none focus:border-green'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+              className='p-3 mt-6 rounded-md bg-light_green font-bold text-white'
+              type='submit'
+              onClick={submitHandler}
+          >
+            login
+          </button>
+          <div className="mt-4 text-black">
+            <Link href="/signup">register</Link>
+          </div>
+        </form>
+      </div>
   )
 }
 
