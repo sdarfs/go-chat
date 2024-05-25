@@ -73,6 +73,10 @@ export default function Register() {
         <>
             <div className='flex items-center justify-center min-w-full min-h-screen'>
                 <div className="m-4 p-6 place-content-center">
+                    <div className='text-5xl font-bold text-center'>
+                        <span className='text-green'>Registration</span>
+                    </div>
+
                     <form className="flex flex-col py-12 mx-8">
                         <input
                             className=" p-3 mt-8  rounded-md focus:outline-none border-2 border-dark-primary focus:border-aqua"
