@@ -6,16 +6,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Handler обрабатывает HTTP-запросы, связанные с пользователями.
 type Handler struct {
 	Service
 }
 
+// NewHandler создает новый экземпляр Handler с указанной сервисной службой.
 func NewHandler(s Service) *Handler {
 	return &Handler{
 		Service: s,
 	}
 }
 
+// CreateUser обрабатывает запрос на создание нового пользователя.
 func (h *Handler) CreateUser(c *gin.Context) {
 	var u CreateUserReq
 	if err := c.ShouldBindJSON(&u); err != nil {
@@ -32,6 +35,7 @@ func (h *Handler) CreateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, res)
 }
 
+// Login обрабатывает запрос на аутентификацию пользователя.
 func (h *Handler) Login(c *gin.Context) {
 	var user LoginUserReq
 	if err := c.ShouldBindJSON(&user); err != nil {
@@ -49,6 +53,7 @@ func (h *Handler) Login(c *gin.Context) {
 	c.JSON(http.StatusOK, u)
 }
 
+// Logout обрабатывает запрос на выход пользователя из системы.
 func (h *Handler) Logout(c *gin.Context) {
 	c.SetCookie("jwt", "", -1, "", "", false, true)
 	c.JSON(http.StatusOK, gin.H{"message": "logout successful"})

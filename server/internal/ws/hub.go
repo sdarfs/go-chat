@@ -26,10 +26,13 @@ func (h *Hub) Run() {
 	for {
 		select {
 		case cl := <-h.Register:
+			// При получении клиента для регистрации
 			if _, ok := h.Rooms[cl.RoomID]; ok {
+				// Проверяем, существует ли комната с указанным ID
 				r := h.Rooms[cl.RoomID]
-
 				if _, ok := r.Clients[cl.ID]; !ok {
+					// Если клиент с указанным ID еще не зарегистрирован в комнате,
+					// добавляем его в список клиентов комнаты
 					r.Clients[cl.ID] = cl
 				}
 			}
@@ -37,6 +40,8 @@ func (h *Hub) Run() {
 			if _, ok := h.Rooms[cl.RoomID]; ok {
 				if _, ok := h.Rooms[cl.RoomID].Clients[cl.ID]; ok {
 					if len(h.Rooms[cl.RoomID].Clients) != 0 {
+						// Если в комнате остались другие клиенты, отправляем сообщение о том,
+						// что пользователь покинул чат
 						h.Broadcast <- &Message{
 							Content:  "user left the chat",
 							RoomID:   cl.RoomID,
