@@ -5,7 +5,7 @@ import { AuthContext, UserInfo } from '../../modules/auth_provider'
 import Link from 'next/link'
 
 
-const index = () => {
+const Index = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { authenticated } = useContext(AuthContext)
@@ -78,4 +78,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index
